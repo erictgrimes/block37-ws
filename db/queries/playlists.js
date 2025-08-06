@@ -6,24 +6,28 @@ export async function getPlaylists() {
   return playlists;
 }
 
-export async function createTrack(name, description) {
+export async function createPlaylist(name, description) {
   const sql = `INSERT INTO playlists (name, description)
-        Value ($1, $2)
+        VALUES ($1, $2)
         RETURNING *`;
   const {
-    rows: [playlists],
+    rows: [playlist],
   } = await db.query(sql, [name, description]);
-  return playlists;
+  return playlist;
 }
 
-export async function deleteTrack(id) {
-    const sql = `DELETE FROM playlists WHERE id = $1 RETURNING *`;
-    const { rows: [track] } = await db.query(sql, [id]);
-    return track;
+export async function deletePlaylist(id) {
+  const sql = `DELETE FROM playlists WHERE id = $1 RETURNING *`;
+  const {
+    rows: [playlist],
+  } = await db.query(sql, [id]);
+  return playlist;
 }
 
 export async function getPlaylistById(id) {
-    const sql = `SELECT * FROM playlists where id = $1`;
-    const { rows: [playlist] } = await db.query(sql, [id]);
-    return playlist;
-};
+  const sql = `SELECT * FROM playlists where id = $1`;
+  const {
+    rows: [playlist],
+  } = await db.query(sql, [id]);
+  return playlist;
+}

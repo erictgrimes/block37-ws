@@ -2,28 +2,16 @@ import db from "#db/client";
 
 export async function getPlaylists_tracks() {
   const sql = "SELECT * FROM playlists";
-  const { rows: playlists } = await db.query(sql);
-  return playlists;
+  const { rows: playlists_tracks } = await db.query(sql);
+  return playlists_tracks;
 }
 
-export async function createPlaylists_tracks(name, description) {
-  const sql = `INSERT INTO playlists (name, description)
-        Value ($1, $2)
+export async function createPlaylists_tracks(playlistId, trackId) {
+  const sql = `INSERT INTO playlists_tracks (playlist_id, track_id)
+        VALUES ($1, $2)
         RETURNING *`;
   const {
-    rows: [playlists],
-  } = await db.query(sql, [name, description]);
-  return playlists;
+    rows: [playlists_tracks],
+  } = await db.query(sql, [playlistId, trackId]);
+  return playlists_tracks;
 }
-
-export async function deleteTrack(id) {
-    const sql = `DELETE FROM playlists WHERE id = $1 RETURNING *`;
-    const { rows: [track] } = await db.query(sql, [id]);
-    return track;
-}
-
-export async function getPlaylistById(id) {
-    const sql = `SELECT * FROM playlists where id = $1`;
-    const { rows: [playlist] } = await db.query(sql, [id]);
-    return playlist;
-};
