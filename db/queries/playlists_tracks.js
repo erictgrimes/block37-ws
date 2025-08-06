@@ -1,7 +1,7 @@
 import db from "#db/client";
 
 export async function getPlaylists_tracks() {
-  const sql = "SELECT * FROM playlists";
+  const sql = "SELECT * FROM playlists_tracks";
   const { rows: playlists_tracks } = await db.query(sql);
   return playlists_tracks;
 }
@@ -11,7 +11,7 @@ export async function createPlaylists_tracks(playlistId, trackId) {
         VALUES ($1, $2)
         RETURNING *`;
   const {
-    rows: [playlists_tracks],
+    rows: [playlists_track],
   } = await db.query(sql, [playlistId, trackId]);
-  return playlists_tracks;
+  return playlists_track;
 }
