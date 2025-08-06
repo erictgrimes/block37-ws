@@ -1,7 +1,5 @@
 import db from "#db/client";
 
-
-
 export async function getTracks() {
   const sql = "SELECT * FROM tracks";
   const { rows: tracks } = await db.query(sql);

@@ -6,7 +6,7 @@ export async function getPlaylists() {
   return playlists;
 }
 
-export async function createPlaylist(name, description) {
+export async function createPlaylist( { name, description }) {
   const sql = `INSERT INTO playlists (name, description)
         VALUES ($1, $2)
         RETURNING *`;
@@ -30,4 +30,13 @@ export async function getPlaylistById(id) {
     rows: [playlist],
   } = await db.query(sql, [id]);
   return playlist;
+}
+
+export async function getAllTracksInPLaylist(playlistId) {
+    const sql = `SELECT tracks.*
+FROM playlists_tracks
+JOIN tracks ON playlists_tracks.track_id = tracks.id
+WHERE playlists_tracks.playlist_id = $1`;
+const { rows: tracks } = await db.query(sql, [playlistId]);
+return tracks;
 }

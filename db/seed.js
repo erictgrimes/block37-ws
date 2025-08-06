@@ -37,18 +37,21 @@ async function seed() {
   }
 
   async function seedPlaylistsTracks() {
-    for (let i = 0; i < 15; i++) {
-      const playlist_track = {
-        playlistId: faker.number.int({ min: 1, max: 10 }),
-        trackId: faker.number.int({ min: 11, max: 20 }),
-      };
-      await createPlaylists_tracks(
-        playlist_track.playlistId,
-        playlist_track.trackId
-      );
-      console.log(
-        `Created Playlist-Track Link: Playlist ID ${playlist_track.playlistId}, Track ID ${playlist_track.trackId}`
-      );
+  const usedCombinations = new Set();
+
+  while (usedCombinations.size < 15) {
+    const playlistId = faker.number.int({ min: 1, max: 10 });
+    const trackId = faker.number.int({ min: 11, max: 20 });
+    const key = `${playlistId}-${trackId}`;
+
+    if (usedCombinations.has(key)) {
+      continue;
     }
+
+    usedCombinations.add(key);
+
+    await createPlaylists_tracks(playlistId, trackId);
+    console.log(`Created Playlist-Track Link: Playlist ID ${playlistId}, Track ID ${trackId}`);
   }
+}
 }
