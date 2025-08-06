@@ -1,5 +1,7 @@
 -- TODO
-DROP TABLE IF EXISTS playlists, playlists_tracks, tracks;
+DROP TABLE IF EXISTS playlists_tracks
+DROP TABLE IF EXISTS playlists
+DROP TABLE IF EXISTS tracks;
 
 
 CREATE TABLE playlists (

@@ -1,7 +1,7 @@
 import db from "#db/client";
 
 export async function getPlaylists_tracks() {
-  const sql = "SELECT * FROM playlists_tracks";
+  const sql = `SELECT * FROM playlists_tracks`;
   const { rows: playlists_tracks } = await db.query(sql);
   return playlists_tracks;
 }
