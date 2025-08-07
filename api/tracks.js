@@ -1,20 +1,12 @@
 import express from "express";
 const router = express.Router();
 export default router;
-import {
-  getTracks,
-  createTrack,
-  deleteTrack,
-  getTrackById,
-} from "#db/queries/tracks";
+import { getTracks, getTrackById } from "#db/queries/tracks";
 
-router
-.route("/")
-.get(async(req, res) => {
+router.route("/").get(async (req, res) => {
   const tracks = await getTracks();
-res.send(tracks);
-})
-
+  res.send(tracks);
+});
 
 router.param("id", async (req, res, next, id) => {
   if (!/^\d+$/.test(id))
@@ -27,8 +19,8 @@ router.param("id", async (req, res, next, id) => {
   next();
 });
 
-router
-.route("/:id")
-.get((req, res) => {
-    res.status(200).send(req.track);
-})
+router.route("/:id").get(async (req, res) => {
+  const track = await getTrackById(req.params.id);
+  if (!track) return res.status(404).send("track not found");
+  res.send(req.track);
+});
