@@ -46,18 +46,16 @@ router.route("/:id").get((req, res) => {
 router
   .route("/:id/tracks")
   .get(async (req, res) => {
-    const tracks = await getAllTracksInPLaylist(req.playlist.id);
+    const tracks = await getTrackByPlaylistId(req.playlist.id);
     res.status(200).send(tracks);
   })
   .post(async (req, res) => {
     if (!req.body) return res.status(400).send("request body is required");
-    const { track_id } = req.body;
-    if (!track_id) {
-      return res.status(400).send("Track ID is required");
-    }
+    const { trackId } = req.body;
+    if (!trackId) return res.status(400).send("Track ID is required");
     const playlistTrack = await createPlaylists_tracks(
       req.playlist.id,
-      track_id
+      trackId
     );
     res.status(201).send(playlistTrack);
   });
